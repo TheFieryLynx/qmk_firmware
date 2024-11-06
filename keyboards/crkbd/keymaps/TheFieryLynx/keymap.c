@@ -27,31 +27,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CL_WD       LGUI(KC_W) // close window
 #define CH_LG       LALT(KC_CAPS) // change language
 
+enum custom_keycodes {
+    KC_TEST = SAFE_RANGE,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case KC_TEST:
+                if (layer_state_is(0)) {
+                    layer_on(4);
+                }
+                if (layer_state_is(4)) {
+                    layer_on(0);
+                }
+                break;
+        }
+    }
+    return true;
+}
+
+#define LAYER_0 LAYOUT_split_3x6_3( \
+       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC, \
+       KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT, \
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RBRC, \
+                                          KC_LCTL,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_RALT \
+  )
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RBRC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_RALT
-                                      //`--------------------------'  `--------------------------'
+    [0] = LAYER_0,
 
-  ),
-
-    [1] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_GRV, XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, SC_AREA,                      XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, KC_MINS, KC_LBRC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT,   SC_WD,                      XXXXXXX, KC_LCBR, KC_RCBR,   LC_SC,  KC_EQL, KC_QUOT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, WD_LEFT, KC_CAPS, WD_RGHT, XXXXXXX,                        CH_LG, KC_LBRC, KC_RBRC, XXXXXXX, KC_BSLS, KC_RBRC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______, _______,    _______,   MO(3), KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  ),
+    [1] = LAYER_0,
 
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
