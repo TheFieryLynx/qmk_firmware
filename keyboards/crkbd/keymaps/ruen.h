@@ -13,6 +13,24 @@ enum custom_keycodes {
     RN_RCBR, // }
     RN_LBRC, // [
     RN_RBRC, // ]
+    RN_GRV,  // ~
+    RN_LOAB, // <
+    RN_ROAB, // >
+    RN_QUOT1,// '
+    RN_QUOT2,// "
+    RN_QUEST,// ?
+    RN_AMSD, // &
+    RN_DLLR, // $
+    RN_CRT,  // ^
+    RN_SMCL, // ;
+    RN_CL,   // :
+    RN_DOG,  // @
+    RN_HASH, // #
+    RN_TLD,  // `
+    RN_SLSH, // /
+    RN_VERT, // |
+    RN_DOT,  // .
+    RN_COMM, // ,
 };
 
 typedef union {
@@ -64,6 +82,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case RN_RBRC:
                 tap_symbol(KC_RBRC);
+                return false;
+            case RN_GRV:
+                tap_symbol(LSFT(KC_GRV));
+                return false;
+            case RN_LOAB:
+                tap_symbol(LSFT(KC_COMM));
+                return false;
+            case RN_ROAB:
+                tap_symbol(LSFT(KC_DOT));
+                return false;
+            case RN_QUOT1:
+                tap_symbol(KC_QUOT);
+                return false;
+            case RN_QUOT2:
+                tap_symbol(LSFT(KC_QUOT));
+                return false;
+            case RN_QUEST:
+                tap_symbol(LSFT(KC_SLSH));
+                return false;
+            case RN_AMSD:
+                tap_symbol(LSFT(KC_7));
+                return false;
+            case RN_DLLR:
+                tap_symbol(LSFT(KC_4));
+                return false;
+            case RN_CRT:
+                tap_symbol(LSFT(KC_6));
+                return false;
+            case RN_SMCL:
+                tap_symbol(KC_SCLN);
+                return false;
+            case RN_CL:
+                tap_symbol(LSFT(KC_SCLN));
+                return false;
+            case RN_DOG:
+                tap_symbol(LSFT(KC_2));
+                return false;
+            case RN_HASH:
+                tap_symbol(LSFT(KC_3));
+                return false;
+            case RN_TLD:
+                tap_symbol(KC_GRV);
+                return false;
+            case RN_SLSH:
+                tap_symbol(KC_SLSH);
+                return false;
+            case RN_VERT:
+                tap_symbol(LSFT(KC_BSLS));
+                return false;
+            case RN_DOT:
+                tap_symbol(KC_DOT);
+                return false;
+            case RN_COMM:
+                tap_symbol(KC_COMM);
                 return false;
             default:
                 break;
