@@ -19,6 +19,7 @@ enum custom_keycodes {
     RN_QUOT1,// '
     RN_QUOT2,// "
     RN_QUEST,// ?
+    RN_EXCLM,// !
     RN_AMSD, // &
     RN_DLLR, // $
     RN_CRT,  // ^
@@ -31,6 +32,9 @@ enum custom_keycodes {
     RN_VERT, // |
     RN_DOT,  // .
     RN_COMM, // ,
+    RN_NMBR, // №
+    RN_PRSNT,// %
+    RN_STAR, // *
 };
 
 typedef union {
@@ -61,6 +65,17 @@ void tap_symbol(uint16_t symbol) {
     }
 }
 
+void tap_reverse_symbol(uint16_t symbol) {
+    if (user_config.language_state) {
+        tap_code16(CH_LG);
+        tap_code16(symbol);
+        tap_code16(CH_LG);
+    } else {
+        tap_code16(symbol);
+    }
+}
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
@@ -70,6 +85,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case LG_SYNC:
                 change_eeconfig();
+                return false;
+            case RN_EXCLM:
+                tap_symbol(LSFT(KC_1));
+                return false;
+            case RN_DOG:
+                tap_symbol(LSFT(KC_2));
+                return false;
+            case RN_HASH:
+                tap_symbol(LSFT(KC_3));
+                return false;
+            case RN_NMBR:
+                tap_reverse_symbol(LSFT(KC_3));
+                return false;
+            case RN_DLLR:
+                tap_symbol(LSFT(KC_4));
+                return false;
+            case RN_PRSNT:
+                tap_symbol(LSFT(KC_5));
+                return false;
+            case RN_CRT:
+                tap_symbol(LSFT(KC_6));
+                return false;
+            case RN_AMSD:
+                tap_symbol(LSFT(KC_7));
+                return false;
+            case RN_STAR:
+                tap_symbol(LSFT(KC_8));
                 return false;
             case RN_LCBR:
                 tap_symbol(KC_LCBR);
@@ -101,26 +143,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case RN_QUEST:
                 tap_symbol(LSFT(KC_SLSH));
                 return false;
-            case RN_AMSD:
-                tap_symbol(LSFT(KC_7));
-                return false;
-            case RN_DLLR:
-                tap_symbol(LSFT(KC_4));
-                return false;
-            case RN_CRT:
-                tap_symbol(LSFT(KC_6));
-                return false;
             case RN_SMCL:
                 tap_symbol(KC_SCLN);
                 return false;
             case RN_CL:
                 tap_symbol(LSFT(KC_SCLN));
-                return false;
-            case RN_DOG:
-                tap_symbol(LSFT(KC_2));
-                return false;
-            case RN_HASH:
-                tap_symbol(LSFT(KC_3));
                 return false;
             case RN_TLD:
                 tap_symbol(KC_GRV);
